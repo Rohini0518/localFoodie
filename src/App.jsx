@@ -1,7 +1,10 @@
 import "./App.css";
+import Welcomepage from "./Welcomepage";
 
 function App() {
-  return <><h1>Welcome to LocalFoodie App</h1></>;
+  return <>
+  <Welcomepage/>
+</>;
 }
 
-export default App;
+export default App

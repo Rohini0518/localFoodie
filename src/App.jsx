@@ -1,5 +1,5 @@
 import "./App.css";
-import Welcomepage from "./Welcomepage";
+import Welcomepage from "./pages/Welcomepage";
 
 function App() {
   return <>
@@ -7,4 +7,4 @@ function App() {
 </>;
 }
 
-export default App
+export default App;

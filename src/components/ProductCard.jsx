@@ -1,6 +1,6 @@
-import Image from "../components/Image";
+import Image from "./Image";
 import Text from "../components/Text";
-import Button from "../components/Button";
+import Button from "./Button";
 import juiceLogo from "../assets/sugarcanejuice-small.png";
 
 export default function ProductCard(){

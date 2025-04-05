@@ -7,21 +7,20 @@ export default function ProductCard(){
     return(
         <div>
         <div className="">
-          <div className=" rounded-xl shadow-2xl w-90">
-            <Image src={juiceLogo} className="w-full h-60 rounded-t-xl  " />
+          <div className=" rounded-xl shadow-2xl m-2">
+            <Image src={juiceLogo} className="w-full h-40 rounded-t-xl  " />
             <Text
               text="Cheruku Rasam(1 Glass)"
               className="text-3xl font-bold mt-2"
             />
-            <div className="flex justify-between  m-2 p-2 align-center cursor-pointer">
-              {" "}
+            <div className="flex justify-between  mb-4 p-4 align-center cursor-pointer">
               <Text
                 text="₹20 Rs "
                 className="text-3xl font-semibold text-green-400 mt-2"
               />
               <Button
-                label="+ Konandi"
-                className="rounded-xl bg-green-400 px-4 py-2  text-white cursor-pointer text-2xl font-bold"
+                label="+ Kavali"
+                className="rounded-xl shadow-2xl bg-green-400 px-2 py-1 text-white cursor-pointer text-2xl font-bold"
               />
             </div>
           </div>

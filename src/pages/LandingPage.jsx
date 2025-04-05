@@ -5,6 +5,8 @@ import ProductCard from "../components/ProductCard";
 
 export default function LandingPage() {
   const bannerLogos = [juiceLogo, juiceLogo, juiceLogo, juiceLogo];
+ 
+
   return (
     <div className="scroll-smooth">
       <div className="  flex flex-wrap justify-center gap-2 sm:gap-8 md:gap-8 lg:gap-15 m-2 ">

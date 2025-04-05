@@ -1,22 +1,37 @@
-import { Link } from "react-router-dom";
-import Button from "../components/Button";
-import Image from "../components/Image";
-import Text from "../components/Text";
-import LandingPage from "./LandingPage";
+import Image from "../assets/components/Image";
+import Text from "../assets/components/Text";
+import Button from "../assets/components/Button";
+import juices from "../assets/juices.jpg";
 
-function Welcomepage() {
+const WelcomePage = () => {
   return (
-    <div>
-      <h1>Hi this is Welcomepage </h1>
-      <Image
-        className="rounded-xl width-8"
-        src="https://scontent.fbho4-1.fna.fbcdn.net/v/t1.6435-9/87727712_105393567732716_4607430539060707328_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=uH57ULEkvoUQ7kNvwFe1isx&_nc_oc=Adm7K6-8WVH-JuT9UzlUauVtlV0s41NXN9Pcmc5BQMGL95tYxrM8vAqcMM71ky2VYJFHYhKQqn-3Zum22v4HT-l5&_nc_zt=23&_nc_ht=scontent.fbho4-1.fna&_nc_gid=hteIik_paXq7HHMG_k5Lvg&oh=00_AYHkLt7G3VhZhURbMw5-_TEF190a42j_BdSGS1eFEoM_iA&oe=68172754"
-      />
-      <Text text="Enjoy the food" className="text-red-500" />
-      <Link to="/landingPage">
-      <Button label="Modalu Pedadama" /></Link>
+    <div className="flex justify-center items-center h-screen bg-gradient-to- bg-green-500 from-green-700 to-green-900 border-4 rounded-3xl">
+      <div className="w-80 text-center relative">
+        <div className="w-40 h-40 mx-auto -mt-20">
+          <Image
+            src={juices}
+            alt="Delicious Food"
+            className="w-full h-full rounded-full border-4 border-white"
+          />
+        </div>
+
+        <Text
+          className="text-xl font-bold text-white-800 mt-4"
+          text="Enjoy Your LocalFoodie"
+        />
+
+        <Text
+          className="text-white-600 mt-2"
+          text="Taste the best Baverages at your fingertips."
+        />
+
+        <Button
+          label="Get Started"
+          className="mt-6 bg-yellow-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-red-500 transition"
+        />
+      </div>
     </div>
   );
-}
+};
 
-export default Welcomepage;
+export default WelcomePage;

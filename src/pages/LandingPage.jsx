@@ -2,6 +2,7 @@ import juiceLogo from "../assets/sugarcanejuice-small.png";
 import Image from "../components/Image";
 import Text from "../components/Text";
 import ProductCard from "../components/ProductCard";
+import Navbar from "../components/Navbar";
 
 export default function LandingPage() {
   const bannerLogos = [juiceLogo, juiceLogo, juiceLogo, juiceLogo];
@@ -9,6 +10,7 @@ export default function LandingPage() {
 
   return (
     <div className="scroll-smooth">
+      <Navbar/>
       <div className="  flex flex-wrap justify-center gap-2 sm:gap-8 md:gap-8 lg:gap-15 m-2 ">
         {bannerLogos.map((image, index) => (
           <Image

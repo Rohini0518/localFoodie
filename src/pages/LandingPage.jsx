@@ -9,9 +9,9 @@ export default function LandingPage() {
  
 
   return (
-    <div className="scroll-smooth">
-      <Navbar/>
-      <div className="  flex flex-wrap justify-center gap-2 sm:gap-8 md:gap-8 lg:gap-15 m-2 ">
+     <div className="scroll-smooth">  
+      <Navbar/>  
+      <div className="flex flex-wrap justify-center gap-5 m-5 sm:gap-8 md:gap-8 lg:gap-15 m-2 ">
         {bannerLogos.map((image, index) => (
           <Image
             key={index}

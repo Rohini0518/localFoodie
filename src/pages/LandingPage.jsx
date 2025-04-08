@@ -75,7 +75,7 @@ export default function LandingPage() {
           />
         ))}
       </div>
-      <Text text="Products" className="font-bold" />
+      <Text text="Products" className="font-bold text-2xl mx-5" />
       <ProductCard products={products} addToCart={handleAddToCart} cart={cart}/>
     </div>
   );

@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function LandingPage() {
   const [cart, setCart] = useState([]);
- const products = [
+  const products = [
     {
       id: 1,
       name: "Cheruku Rasam (1 Glass)",
@@ -15,32 +15,37 @@ export default function LandingPage() {
       image: juiceLogo,
       label: "+ Kavali",
     },
-    
+
     {
       id: 2,
       name: "Milk(1/2 liter) ",
       price: 25,
-      image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image:
+        "https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       label: "+ Kavali",
     },
     {
       id: 3,
       name: "Curd(1/2 liter)",
       price: 30,
-      image:"https://media.istockphoto.com/id/1218711576/photo/home-made-curd-in-a-earthen-bowl.jpg?s=2048x2048&w=is&k=20&c=vW76YCnN41EUmeg180y-k5AKXy-_Ymj5I4TIWRkMcmE=",
+      image:
+        "https://media.istockphoto.com/id/1218711576/photo/home-made-curd-in-a-earthen-bowl.jpg?s=2048x2048&w=is&k=20&c=vW76YCnN41EUmeg180y-k5AKXy-_Ymj5I4TIWRkMcmE=",
       label: "+ Kavali",
-    },{
+    },
+    {
       id: 4,
       name: "Thums Up (Bottle)",
       price: 45,
-      image: "https://img.clevup.in/325460/thums-up-pet-bottle-750ml-1696659967639_SKU-2095_0.jpg?width=600&format=webp",
+      image:
+        "https://img.clevup.in/325460/thums-up-pet-bottle-750ml-1696659967639_SKU-2095_0.jpg?width=600&format=webp",
       label: "+ Kavali",
     },
     {
       id: 5,
       name: "Sprite (Bottle)",
       price: 40,
-      image: "https://img.thecdn.in/285347/1678882370021_SKU-0456_0.jpg?width=600&format=webp",
+      image:
+        "https://img.thecdn.in/285347/1678882370021_SKU-0456_0.jpg?width=600&format=webp",
       label: "+ Kavali",
     },
   ];
@@ -51,9 +56,10 @@ export default function LandingPage() {
       console.log(existing);
 
       if (existing) {
-        return prevproduct.map((item) => 
-          
-          item.id === product.id ? {...item,quantity:item.quantity + 1} : item
+        return prevproduct.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       } else {
         console.log("else");
@@ -63,9 +69,24 @@ export default function LandingPage() {
     });
     console.log(cart, cart.length);
   };
+  const cartIncrement = (id) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const cartDecrement = (id) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+      )
+    );
+  };
   return (
     <div className="scroll-smooth">
-      <Navbar/>
+      <Navbar />
       <div className="  flex flex-wrap justify-center gap-2 sm:gap-8 md:gap-8 lg:gap-15 m-2 ">
         {products.map((item) => (
           <Image
@@ -76,7 +97,13 @@ export default function LandingPage() {
         ))}
       </div>
       <Text text="Products" className="font-bold" />
-      <ProductCard products={products} addToCart={handleAddToCart} cart={cart}/>
+      <ProductCard
+        products={products}
+        addToCart={handleAddToCart}
+        cart={cart}
+        onInc={cartIncrement}
+        onDec={cartDecrement}
+      />
     </div>
   );
 }

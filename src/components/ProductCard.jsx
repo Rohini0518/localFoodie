@@ -6,6 +6,8 @@ export default function ProductCard({
   products,
   cart,
   addToCart,
+  onInc,
+  onDec,
 }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
@@ -34,9 +36,19 @@ export default function ProductCard({
                 />
               ) : (
                 <div className="rounded-xl shadow-2xl px-3 py-2 text-white cursor-pointer text-xl font-semibold">
-                  <Button className="text-green-500 text-md" label={"➕"} />
-                  <span className="mx-2 text-black-800">{existInCart.quantity}</span>
-                  <Button className="text-green-500 text-md" label={"➖"} />
+                  <Button
+                    className="text-green-500 text-md"
+                    label={"➕"}
+                    onClick={() => onInc(product.id)}
+                  />
+                  <span className="mx-2 text-black font-xl">
+                    {existInCart.quantity}
+                  </span>
+                  <Button
+                    className="text-green-500 text-md"
+                    label={"➖"}
+                    onClick={() => onDec(product.id)}
+                  />
                 </div>
               )}
             </div>

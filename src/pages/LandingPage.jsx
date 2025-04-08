@@ -3,8 +3,10 @@ import Image from "../components/Image";
 import Text from "../components/Text";
 import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar";
+import { useState } from "react";
 
 export default function LandingPage() {
+  const [cart, setCart] = useState([]);
  const products = [
     {
       id: 1,
@@ -43,6 +45,24 @@ export default function LandingPage() {
     },
   ];
 
+  const handleAddToCart = (product) => {
+    setCart((prevproduct) => {
+      const existing = prevproduct.find((item) => item.id === product.id);
+      console.log(existing);
+
+      if (existing) {
+        return prevproduct.map((item) => 
+          
+          item.id === product.id ? {...item,quantity:item.quantity + 1} : item
+        );
+      } else {
+        console.log("else");
+
+        return [...prevproduct, { ...product, quantity: 1 }];
+      }
+    });
+    console.log(cart, cart.length);
+  };
   return (
     <div className="scroll-smooth">
       <Navbar/>
@@ -56,7 +76,7 @@ export default function LandingPage() {
         ))}
       </div>
       <Text text="Products" className="font-bold" />
-      <ProductCard/>
+      <ProductCard products={products} addToCart={handleAddToCart} cart={cart}/>
     </div>
   );
 }

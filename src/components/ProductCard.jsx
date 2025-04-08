@@ -6,8 +6,6 @@ export default function ProductCard({
   products,
   cart,
   addToCart,
-  onInc,
-  OnDec,
 }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">

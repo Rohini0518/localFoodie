@@ -64,10 +64,17 @@ export default function LandingPage() {
     console.log(cart, cart.length);
   };
   return (
+<<<<<<< HEAD
+     <div className="scroll-smooth">  
+      <Navbar/>  
+      <div className="flex flex-wrap justify-center gap-5 m-5 sm:gap-8 md:gap-8 lg:gap-15 m-2 ">
+        {bannerLogos.map((image, index) => (
+=======
     <div className="scroll-smooth">
       <Navbar/>
       <div className="  flex flex-wrap justify-center gap-2 sm:gap-8 md:gap-8 lg:gap-15 m-2 ">
         {products.map((item) => (
+>>>>>>> 32beeb02a91c7591be932e02726bfa6e1fdb26df
           <Image
             key={item.id}
             src={item.image}

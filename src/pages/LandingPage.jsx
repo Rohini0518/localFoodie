@@ -3,10 +3,12 @@ import Image from "../components/Image";
 import Text from "../components/Text";
 import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../App";
 
 export default function LandingPage() {
-  const [cart, setCart] = useState([]);
+  const {cart,setCart}=useContext(CartContext)
+  const [totalQuantity, setTotalQuantity] = useState(0);
   const products = [
     {
       id: 1,
@@ -50,6 +52,17 @@ export default function LandingPage() {
     },
   ];
 
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) setCart(JSON.parse(savedCart));
+  }, []);
+
+  useEffect(() => {
+    const total = cart?.reduce((sum, item) => sum + item.quantity, 0);
+    setTotalQuantity(total);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   const handleAddToCart = (product) => {
     setCart((prevproduct) => {
       const existing = prevproduct.find((item) => item.id === product.id);
@@ -63,7 +76,6 @@ export default function LandingPage() {
         );
       } else {
         console.log("else");
-
         return [...prevproduct, { ...product, quantity: 1 }];
       }
     });
@@ -71,9 +83,16 @@ export default function LandingPage() {
   };
   const cartIncrement = (id) => {
     setCart((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
+      prev.map((item) => {
+        if (item.id === id) {
+          if (item.quantity >= 5) {
+            alert("Maximum quantity is 5!");
+            return item;
+          }
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      })
     );
   };
 
@@ -86,7 +105,7 @@ export default function LandingPage() {
   };
   return (
     <div className="scroll-smooth">
-      <Navbar />
+      <Navbar cartValue={totalQuantity}/>
       <div className="  flex flex-wrap justify-center gap-2 sm:gap-8 md:gap-8 lg:gap-15 m-2 ">
         {products.map((item) => (
           <Image
@@ -100,7 +119,6 @@ export default function LandingPage() {
       <ProductCard
         products={products}
         addToCart={handleAddToCart}
-        cart={cart}
         onInc={cartIncrement}
         onDec={cartDecrement}
       />

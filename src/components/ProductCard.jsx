@@ -13,7 +13,7 @@ export default function ProductCard({ products, addToCart, onInc, onDec }) {
         return (
           <div
             key={product.id}
-            className="w-80 h-[320px] mx-auto rounded-xl shadow-2xl m-2 cursor-pointer object-cover transform transition-transform duration-500 hover:scale-110 lg:hover:scale-110"
+            className="w-80 h-[320px] mx-auto rounded-xl shadow-2xl m-2 cursor-pointer object-cover transform transition-transform duration-500 active:scale-110 lg:hover:scale-110"
           >
             <Image src={product.image} className="w-full h-40 rounded-t-xl" />
             <Text
@@ -51,7 +51,7 @@ export default function ProductCard({ products, addToCart, onInc, onDec }) {
             </div>
             <Button
               label="Konnandi"
-              className="w-70 bg-orange-400 ml-4 mb-1 p-1 rounded-xl shadow-xl"
+              className="w-70 bg-orange-400 text-xl text-white ml-4 mb-1 p-1 rounded-xl shadow-xl"
             />
           </div>
         );

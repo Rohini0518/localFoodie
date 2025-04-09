@@ -51,11 +51,25 @@ export default function LandingPage() {
       label: "+ Kavali",
     },
   ];
-
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) setCart(JSON.parse(savedCart));
+    try {
+      const savedCart = localStorage.getItem("cart");
+        if (!savedCart || savedCart === "undefined") {
+        setCart([]);
+      } else {
+        const parsed = JSON.parse(savedCart);
+        if (Array.isArray(parsed)) {
+          setCart(parsed);
+        } else {
+          setCart([]); 
+        }
+      }
+    } catch (error) {
+      console.error("Failed to parse cart from localStorage:", error);
+      setCart([]); 
+    }
   }, []);
+  
 
   useEffect(() => {
     const total = cart?.reduce((sum, item) => sum + item.quantity, 0);

@@ -16,14 +16,8 @@ function Navbar({cartValue}) {
       <Image
       src={Cart}
       alt="cart"
-<<<<<<< HEAD
-      className="h-10 sm:h-7 md:h-10 lg:h-10 object-cover p-0"
-      />
-      <sup className="text-xl text-white">1</sup>
-=======
       className="h-10 sm:h-7 md:h-10 lg:h-10 object-cover"
       /><span>{cartValue}</span>
->>>>>>> b92e9b90d33040a89cc405abe92a600eb1bd482c
     </div>
     );
 }

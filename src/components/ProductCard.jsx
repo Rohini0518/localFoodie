@@ -13,14 +13,14 @@ export default function ProductCard({ products, addToCart, onInc, onDec }) {
         return (
           <div
             key={product.id}
-            className="w-80 h-[270px] mx-auto rounded-xl shadow-2xl m-2 cursor-pointer object-cover transform transition-transform duration-500 hover:scale-110 lg:hover:scale-110"
+            className="w-80 h-[320px] mx-auto rounded-xl shadow-2xl m-2 cursor-pointer object-cover transform transition-transform duration-500 hover:scale-110 lg:hover:scale-110"
           >
             <Image src={product.image} className="w-full h-40 rounded-t-xl" />
             <Text
               text={product.name}
               className="text-2xl font-bold mt-2 pl-4 line-clamp-2"
             />
-            <div className="flex justify-between items-center mx-3 my-2">
+            <div className="flex justify-between items-center mx-3 my-3">
               <Text
                 text={`₹${product.price}Rs`}
                 className="text-3xl font-semibold text-green-500 "
@@ -32,7 +32,7 @@ export default function ProductCard({ products, addToCart, onInc, onDec }) {
                   className="rounded-xl shadow-2xl bg-green-500 px-2 py-1 text-white cursor-pointer text-2xl font-bold"
                 />
               ) : (
-                <div className="rounded-xl shadow-2xl px-3 py-2 text-white cursor-pointer text-xl font-semibold">
+                <div className="rounded-xl shadow-2xl px-2 py-1 text-white cursor-pointer text-2xl font-semibold">
                   <Button
                     className="text-green-500 text-md"
                     label={"➖"}
@@ -51,7 +51,7 @@ export default function ProductCard({ products, addToCart, onInc, onDec }) {
             </div>
             <Button
               label="Konnandi"
-              className="w-70 bg-orange-400 ml-4 mb-2 p-1 rounded-xl shadow-xl"
+              className="w-70 bg-orange-400 ml-4 mb-1 p-1 rounded-xl shadow-xl"
             />
           </div>
         );

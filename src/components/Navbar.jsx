@@ -11,13 +11,12 @@ function Navbar({cartValue}) {
         alt="logo"
         className="h-7 sm:h-7 md:h-7 lg:h-10 object-cover border-2 border-orange-500"
       />
-      <Input/>
-      
+      <Input/>      
       <Image
       src={Cart}
       alt="cart"
       className="h-10 sm:h-7 md:h-10 lg:h-10 object-cover"
-      /><span>{cartValue}</span>
+      /><sup className="text-xl text-white font-bold">{cartValue}</sup>
     </div>
     );
 }

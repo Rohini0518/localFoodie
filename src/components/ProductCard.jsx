@@ -1,22 +1,24 @@
 import Image from "./Image";
 import Text from "../components/Text";
 import Button from "./Button";
+import { useContext } from "react";
+import { CartContext } from "../App";
 
 export default function ProductCard({
   products,
-  cart,
   addToCart,
   onInc,
   onDec,
 }) {
+  const {cart}=useContext(CartContext)
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
       {products.map((product) => {
-        const existInCart = cart.find((item) => item.id === product.id);
+        const existInCart = cart?.find((item) => item.id === product.id);
         return (
           <div
             key={product.id}
-            className="w-80 h-[300px] rounded-xl shadow-2xl m-2"
+            className="w-80 h-[300px] rounded-xl shadow-2xl m-2 cursor-pointer"
           >
             <Image src={product.image} className="w-full h-40 rounded-t-xl  " />
             <Text
@@ -28,29 +30,29 @@ export default function ProductCard({
                 text={`₹${product.price}Rs`}
                 className="text-3xl font-semibold text-green-400 "
               />
-              {!existInCart ? (
+              {!existInCart || (existInCart.quantity===0) ? (
                 <Button
                   label={product.label}
                   onClick={() => addToCart(product)}
                   className="rounded-xl shadow-2xl bg-green-400 px-2 py-1 text-white cursor-pointer text-2xl font-bold"
                 />
-              ) : (
-                <div className="rounded-xl shadow-2xl px-3 py-2 text-white cursor-pointer text-xl font-semibold">
-                  <Button
-                    className="text-green-500 text-md"
-                    label={"➕"}
-                    onClick={() => onInc(product.id)}
-                  />
-                  <span className="mx-2 text-black font-xl">
-                    {existInCart.quantity}
-                  </span>
+              ) :
+                (<div className="rounded-xl shadow-2xl px-3 py-2 text-white cursor-pointer text-xl font-semibold">
                   <Button
                     className="text-green-500 text-md"
                     label={"➖"}
                     onClick={() => onDec(product.id)}
                   />
-                </div>
-              )}
+                  <span className="mx-2 text-black font-xl">
+                    {existInCart.quantity}
+                  </span>
+                  <Button
+                  className="text-green-500 text-md"
+                  label={"➕"}
+                  onClick={() => onInc(product.id)}
+                />
+                </div>)
+              }
             </div>
           </div>
         );

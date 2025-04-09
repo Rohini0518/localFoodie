@@ -1,10 +1,10 @@
-import { createContext, useState } from "react";
+import {  useState } from "react";
 import "./App.css";
 import LandingPage from "./pages/LandingPage";
 import Welcomepage from "./pages/Welcomepage";
 import { Routes, Route } from "react-router-dom";
+import { CartContext } from "./CartContext";
 
-export const CartContext=createContext();
 function App() {
   const [cart,setCart]=useState()
   return (

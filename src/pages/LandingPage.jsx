@@ -4,7 +4,7 @@ import Text from "../components/Text";
 import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar";
 import { useContext, useEffect, useState } from "react";
-import { CartContext } from "../App";
+import { CartContext } from "../CartContext";
 
 export default function LandingPage() {
   const {cart,setCart}=useContext(CartContext)

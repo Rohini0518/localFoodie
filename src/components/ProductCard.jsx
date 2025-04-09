@@ -2,15 +2,10 @@ import Image from "./Image";
 import Text from "../components/Text";
 import Button from "./Button";
 import { useContext } from "react";
-import { CartContext } from "../App";
+import { CartContext } from "../CartContext";
 
-export default function ProductCard({
-  products,
-  addToCart,
-  onInc,
-  onDec,
-}) {
-  const {cart}=useContext(CartContext)
+export default function ProductCard({ products, addToCart, onInc, onDec }) {
+  const { cart } = useContext(CartContext);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
       {products.map((product) => {
@@ -18,26 +13,26 @@ export default function ProductCard({
         return (
           <div
             key={product.id}
-            className="w-80 h-[300px] rounded-xl shadow-2xl m-2 cursor-pointer"
+            className="w-80 h-[320px] rounded-xl shadow-2xl m-2 cursor-pointer"
           >
             <Image src={product.image} className="w-full h-40 rounded-t-xl  " />
             <Text
               text={product.name}
-              className="text-2xl font-bold mt-2 line-clamp-2"
+              className="text-2xl font-bold mt-2 text-center line-clamp-2"
             />
-            <div className="flex justify-between items-center mx-4 my-6">
+            <div className="flex justify-between items-center mx-4 my-4">
               <Text
                 text={`₹${product.price}Rs`}
                 className="text-3xl font-semibold text-green-400 "
               />
-              {!existInCart || (existInCart.quantity===0) ? (
+              {!existInCart || existInCart.quantity === 0 ? (
                 <Button
                   label={product.label}
                   onClick={() => addToCart(product)}
                   className="rounded-xl shadow-2xl bg-green-400 px-2 py-1 text-white cursor-pointer text-2xl font-bold"
                 />
-              ) :
-                (<div className="rounded-xl shadow-2xl px-3 py-2 text-white cursor-pointer text-xl font-semibold">
+              ) : (
+                <div className="rounded-xl shadow-2xl px-3 py-2 text-white cursor-pointer text-xl font-semibold">
                   <Button
                     className="text-green-500 text-md"
                     label={"➖"}
@@ -47,13 +42,17 @@ export default function ProductCard({
                     {existInCart.quantity}
                   </span>
                   <Button
-                  className="text-green-500 text-md"
-                  label={"➕"}
-                  onClick={() => onInc(product.id)}
-                />
-                </div>)
-              }
+                    className="text-green-500 text-md"
+                    label={"➕"}
+                    onClick={() => onInc(product.id)}
+                  />
+                </div>
+              )}
             </div>
+            <Button
+              label="Konnandi"
+              className="w-70 bg-orange-400 ml-4 mb-2 p-1 rounded-xl shadow-xl"
+            />
           </div>
         );
       })}

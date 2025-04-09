@@ -120,7 +120,7 @@ export default function LandingPage() {
   return (
     <div className="scroll-smooth">
       <Navbar cartValue={totalQuantity}/>
-      <div className="  flex flex-wrap justify-center gap-2 sm:gap-8 md:gap-8 lg:gap-15 m-2 ">
+      <div className="  flex flex-wrap justify-center gap-3 sm:gap-8 md:gap-8 lg:gap-15 m-4 ">
         {products.map((item) => (
           <Image
             key={item.id}
@@ -129,7 +129,7 @@ export default function LandingPage() {
           />
         ))}
       </div>
-      <Text text="Products" className="font-bold" />
+      <Text text="Products" className="font-bold text-3xl mx-10 text-orange-500" />
       <ProductCard
         products={products}
         addToCart={handleAddToCart}

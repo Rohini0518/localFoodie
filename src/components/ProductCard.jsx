@@ -12,29 +12,29 @@ export default function ProductCard({
 }) {
   const {cart}=useContext(CartContext)
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-5">
       {products.map((product) => {
         const existInCart = cart?.find((item) => item.id === product.id);
         return (
           <div
             key={product.id}
-            className="w-80 h-[300px] rounded-xl shadow-2xl m-2 cursor-pointer"
+            className="w-80 h-[270px] mx-auto rounded-xl shadow-2xl m-2 cursor-pointer object-cover transform transition-transform duration-500 hover:scale-110 lg:hover:scale-110"
           >
-            <Image src={product.image} className="w-full h-40 rounded-t-xl  " />
+            <Image src={product.image} className="w-full h-40 rounded-t-xl" />
             <Text
               text={product.name}
-              className="text-2xl font-bold mt-2 line-clamp-2"
+              className="text-2xl font-bold mt-2 pl-4 line-clamp-2"
             />
-            <div className="flex justify-between items-center mx-4 my-6">
+            <div className="flex justify-between items-center mx-3 my-2">
               <Text
                 text={`₹${product.price}Rs`}
-                className="text-3xl font-semibold text-green-400 "
+                className="text-3xl font-semibold text-green-500 "
               />
               {!existInCart || (existInCart.quantity===0) ? (
                 <Button
                   label={product.label}
                   onClick={() => addToCart(product)}
-                  className="rounded-xl shadow-2xl bg-green-400 px-2 py-1 text-white cursor-pointer text-2xl font-bold"
+                  className="rounded-xl shadow-2xl bg-green-500 px-2 py-1 text-white cursor-pointer text-2xl font-bold"
                 />
               ) :
                 (<div className="rounded-xl shadow-2xl px-3 py-2 text-white cursor-pointer text-xl font-semibold">

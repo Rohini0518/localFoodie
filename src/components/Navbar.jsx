@@ -12,13 +12,15 @@ function Navbar() {
         className="h-7 sm:h-7 md:h-7 lg:h-10 object-cover border-2 border-orange-500"
       />
       <Input/>
+      
       <Image
       src={Cart}
       alt="cart"
-      className="h-10 sm:h-7 md:h-10 lg:h-10 object-cover"
+      className="h-10 sm:h-7 md:h-10 lg:h-10 object-cover p-0"
       />
+      <sup className="text-xl text-white">1</sup>
     </div>
-  );
+    );
 }
 
 export default Navbar;

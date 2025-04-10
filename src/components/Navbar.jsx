@@ -5,7 +5,7 @@ import Input from "./Input";
 
 function Navbar({cartValue}) {
   return (
-    <div className="w-full flex justify-start items-center p-2 h-12 bg-gradient-to-r from-green-700 via-green-600 to-green-700">
+    <div className="w-full sticky top-0 z-50 flex justify-start items-center p-2 h-12 bg-gradient-to-r from-green-700 via-green-600 to-green-700">
       <Image 
         src={Logo} 
         alt="logo"

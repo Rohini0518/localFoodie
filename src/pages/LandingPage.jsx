@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../CartContext";
+import CartCard from "../components/CartCard";
 
 export default function LandingPage() {
   const {cart,setCart}=useContext(CartContext)
@@ -136,6 +137,7 @@ export default function LandingPage() {
         onInc={cartIncrement}
         onDec={cartDecrement}
       />
+      <CartCard/>
     </div>
   );
 }

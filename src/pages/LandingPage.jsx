@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar";
 import { useContext, useEffect, useRef, useState } from "react";
 import { CartContext } from "../CartContext";
+import AddToCartPage from "./AddToCartPage";
 
 export default function LandingPage() {
   const { cart, setCart } = useContext(CartContext);
@@ -147,7 +148,7 @@ export default function LandingPage() {
             key={item.id}
             src={item.image}
             onClick={() => scrollToCard(item.id)}
-            className="w-14 h-14 sm:w-18 sm:h-18 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-xl object-cover"
+            className="w-14 h-14 sm:w-18 sm:h-18 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-xl cursor-pointer object-cover"
           />
         ))}
       </div>
@@ -162,6 +163,7 @@ export default function LandingPage() {
         onDec={cartDecrement}
         productRef={productRef}
       />
+      <AddToCartPage/>
     </div>
   );
 }

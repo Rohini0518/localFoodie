@@ -3,6 +3,7 @@ import Text from "../components/Text";
 import Button from "./Button";
 import { useContext } from "react";
 import { CartContext } from "../CartContext";
+import { Link } from "react-router-dom";
 
 export default function ProductCard({ products,productRef, addToCart, onInc, onDec }) {
   const { cart } = useContext(CartContext);
@@ -50,10 +51,11 @@ export default function ProductCard({ products,productRef, addToCart, onInc, onD
                 </div>
               )}
             </div>
+            <Link to="/cart">
             <Button
               label="Konnandi"
-              className="w-70 bg-orange-400 text-xl text-white ml-4 mb-1 p-1 rounded-xl shadow-xl"
-            />
+              className="w-70 bg-orange-400 text-xl text-white ml-4 mb-1 p-1 rounded-xl shadow-xl cursor-pointer"
+            /></Link>
           </div>
         );
       })}

@@ -2,13 +2,12 @@ import juiceLogo from "../assets/sugarcanejuice-small.png";
 import Image from "../components/Image";
 import Text from "../components/Text";
 import ProductCard from "../components/ProductCard";
-import Navbar from "../components/Navbar";
 import { useContext, useEffect, useRef } from "react";
 import { CartContext } from "../CartContext";
-import AddToCartPage from "./AddToCartPage";
 
 export default function LandingPage() {
-  const {setCart,totalQuantity,handleAddToCart,onIncrease,onDecrease } = useContext(CartContext);
+  const { cart, setCart, handleAddToCart, onIncrease, onDecrease } =
+    useContext(CartContext);
   const productRef = useRef({});
   const products = [
     {
@@ -53,6 +52,10 @@ export default function LandingPage() {
     },
   ];
   useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
     try {
       const savedCart = localStorage.getItem("cart");
       if (!savedCart || savedCart === "undefined") {
@@ -70,30 +73,6 @@ export default function LandingPage() {
       // setCart([]);
     }
   }, []);
-
-  
-
-  // const handleAddToCart = (product) => {
-  //   setCart((prevproduct) => {
-  //     const existing = prevproduct.find((item) => item.id === product.id);
-  //     console.log(existing);
-
-  //     if (existing) {
-  //       return prevproduct.map((item) =>
-  //         item.id === product.id
-  //           ? { ...item, quantity: item.quantity + 1 }
-  //           : item
-  //       );
-  //     } else {
-  //       console.log("else");
-  //       return [...prevproduct, { ...product, quantity: 1 }];
-  //     }
-  //   });
-  //   console.log(cart, cart.length);
-  // };
- 
-
- 
 
   const scrollToCard = (id) => {
     const targetProduct = productRef.current[id];
@@ -117,7 +96,6 @@ export default function LandingPage() {
   };
   return (
     <div className="scroll-smooth">
-      <Navbar cartValue={totalQuantity} />
       <div className="  flex flex-wrap justify-center gap-3 sm:gap-8 md:gap-8 lg:gap-15 m-4 ">
         {products.map((item) => (
           <Image
@@ -139,7 +117,6 @@ export default function LandingPage() {
         onDec={onDecrease}
         productRef={productRef}
       />
-      <AddToCartPage/>
     </div>
   );
 }

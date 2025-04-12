@@ -1,43 +1,121 @@
 import { CartContext } from "../CartContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Text from "../components/Text";
 import Image from "../components/Image";
 import Button from "../components/Button";
+import { Link, useNavigate } from "react-router-dom";
 export default function AddToCartPage() {
-  const { cart,setCart,onIncrease,onDecrease } = useContext(CartContext);
+  const navigate = useNavigate();
+  const { cart, setCart, onIncrease, onDecrease } = useContext(CartContext);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [delivery, setDelivery] = useState(20);
 
-  const handleCancelProduct=(id)=>{
-    setCart((prevItem)=>prevItem.filter((item)=>item.id!=id))
-  }
+  useEffect(() => {
+    const productPrice = cart.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+    setTotalPrice(productPrice);
+  }, [cart]);
 
-  if (!cart) return <h1>No items in cart Please add</h1>
+  const handleCancelProduct = (id) => {
+    setCart((prevItem) => prevItem.filter((item) => item.id != id));
+  };
+
+  if (!cart) return <h1>No items in cart Please add</h1>;
   return (
     <div>
-      <div className="text-bold font-xl ">
-        <div className="flex m-2 font-bold ">
-          <Text text={"<"}  className="pr-2 "/>
-          <Text text={`mee sanchi (${cart.length > 0 ? cart.length : "0"})`} />
+      <div className=" flex mx-2 my-4 items-center justify-between text-bold font-xl ">
+        <div className="flex font-bold ">
+          {" "}
+          <Text
+            text={"<"}
+            onClick={() => navigate(-1)}
+            className="pr-2 text-2xl cursor-pointer"
+          />
+          <Text
+            className="mt-1 "
+            text={`mee sanchi (${cart.length > 0 ? cart.length : "0"})`}
+          />
         </div>
-        <Text text={"X"} />
+        <div>
+          <Link to="/landingPage">
+            <Text
+              className="mr-2 font-bold cursor-pointer px-3 py-1 hover:bg-red-600 text-white rounded-md bg-red-400"
+              text={"X"}
+            />
+          </Link>
+        </div>
       </div>
+      <hr className="border-t border-gray-800 my-4" />
 
       <div>
-        {cart.length>0?cart.map((item)=>
-        <div key={item.id } className="flex justify-between  mx-3 my-4">
-       <Image src={item.image} className="w-40 h-40 rounded-xl"/>
-       <div className="mx-4">
-        <Text text={item.name} className="font-bold text-xl line-clamp-2 "/>
-        <Text text={`₹ ${item.price*item.quantity}Rs`} className="text-red-400 text-xl font-bold my-2 "/>
-      <div className="bg-green-400 w-22 rounded-xl py-1 px-2 ">
-        <Button label={"➖"} className="pr-2" onClick={()=>onDecrease(item.id)} />
-        <span className="text-white font-bold text-md">{item.quantity}</span>
-       <Button label={"➕"} className="pl-2" onClick={()=>onIncrease(item.id)}/>
-       </div> 
-        </div>
-        <Text text={"X"}  className="cursor-pointer text-red-400 font-semibold" onClick={()=>handleCancelProduct(item.id)}/>
-        </div>
-        ):""}
+        {cart.length > 0
+          ? cart.map((item) => (
+              <div key={item.id} className="flex justify-between mx-8 my-4">
+                <Image src={item.image} className="w-40 h-40 rounded-xl" />
+                <div className="mx-4 flex flex-col items-start ">
+                  <div className="w-full">
+                    <Text
+                      text={item.name}
+                      className="font-bold text-xl break-words"
+                    />
+                  </div>
+                  <Text
+                    text={`₹ ${item.price * item.quantity}Rs`}
+                    className="text-red-400 text-xl font-bold my-2 "
+                  />
+                  <div className="bg-green-400 w-22 rounded-xl py-1 px-2 ">
+                    <Button
+                      label={"➖"}
+                      className="pr-2 cursor-pointer" 
+                      onClick={() => onDecrease(item.id)}
+                    />
+                    <span className="text-white font-bold text-md">
+                      {item.quantity}
+                    </span>
+                    <Button
+                      label={"➕"}
+                      className="pl-2 cursor-pointer"
+                      onClick={() => onIncrease(item.id)}
+                    />
+                  </div>
+                </div>
+                <Text
+                  text={"X"}
+                  className="cursor-pointer text-red-400 font-semibold"
+                  onClick={() => handleCancelProduct(item.id)}
+                />
+              </div>
+            ))
+          : ""}
       </div>
+     {totalPrice != 0?
+      <div className="m-8">
+        <Text
+          text="Price Details"
+          className=" text-2xl fond-bold text-green-400 my-4 "
+        />
+        <div className="h-50">
+          <div className="flex justify-between mb-4   items-center">
+            <Text text="Products Price" />
+            <Text text={totalPrice} />
+          </div>
+          <div className="flex justify-between mb-4   items-center">
+            <Text text="Delivery" />{" "}
+            <Text text={ delivery} />
+          </div>
+          <div className="flex justify-between   items-center">
+            <Text text="Total Price" />{" "}
+            <Text text={totalPrice + delivery} />
+          </div>
+        </div>
+
+        <Button
+          label={`pay ${totalPrice + delivery }`}
+          className=" w-full fixed bottom-2 bg-green-500 text-white px-3 py-3 rounded-xl text-lg font-bold shadow-lg hover:bg-green-600 cursor-pointer"
+        />
+      </div>:<h1 className="flex items-center justify-center text-3xl text-red-400 font-bold ">Please Add items into Cart</h1>}
     </div>
   );
 }

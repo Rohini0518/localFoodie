@@ -3,14 +3,13 @@ import Image from "../components/Image";
 import Text from "../components/Text";
 import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { CartContext } from "../CartContext";
 import AddToCartPage from "./AddToCartPage";
 
 export default function LandingPage() {
-  const { cart, setCart } = useContext(CartContext);
+  const {setCart,totalQuantity,handleAddToCart,onIncrease,onDecrease } = useContext(CartContext);
   const productRef = useRef({});
-  const [totalQuantity, setTotalQuantity] = useState(0);
   const products = [
     {
       id: 1,
@@ -68,56 +67,33 @@ export default function LandingPage() {
       }
     } catch (error) {
       console.error("Failed to parse cart from localStorage:", error);
-      setCart([]);
+      // setCart([]);
     }
   }, []);
 
-  useEffect(() => {
-    const total = cart?.reduce((sum, item) => sum + item.quantity, 0);
-    setTotalQuantity(total);
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  
 
-  const handleAddToCart = (product) => {
-    setCart((prevproduct) => {
-      const existing = prevproduct.find((item) => item.id === product.id);
-      console.log(existing);
+  // const handleAddToCart = (product) => {
+  //   setCart((prevproduct) => {
+  //     const existing = prevproduct.find((item) => item.id === product.id);
+  //     console.log(existing);
 
-      if (existing) {
-        return prevproduct.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        console.log("else");
-        return [...prevproduct, { ...product, quantity: 1 }];
-      }
-    });
-    console.log(cart, cart.length);
-  };
-  const cartIncrement = (id) => {
-    setCart((prev) =>
-      prev.map((item) => {
-        if (item.id === id) {
-          if (item.quantity >= 5) {
-            alert("Maximum quantity is 5!");
-            return item;
-          }
-          return { ...item, quantity: item.quantity + 1 };
-        }
-        return item;
-      })
-    );
-  };
+  //     if (existing) {
+  //       return prevproduct.map((item) =>
+  //         item.id === product.id
+  //           ? { ...item, quantity: item.quantity + 1 }
+  //           : item
+  //       );
+  //     } else {
+  //       console.log("else");
+  //       return [...prevproduct, { ...product, quantity: 1 }];
+  //     }
+  //   });
+  //   console.log(cart, cart.length);
+  // };
+ 
 
-  const cartDecrement = (id) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-      )
-    );
-  };
+ 
 
   const scrollToCard = (id) => {
     const targetProduct = productRef.current[id];
@@ -159,8 +135,8 @@ export default function LandingPage() {
       <ProductCard
         products={products}
         addToCart={handleAddToCart}
-        onInc={cartIncrement}
-        onDec={cartDecrement}
+        onInc={onIncrease}
+        onDec={onDecrease}
         productRef={productRef}
       />
       <AddToCartPage/>

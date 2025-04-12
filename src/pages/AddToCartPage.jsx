@@ -4,25 +4,11 @@ import Text from "../components/Text";
 import Image from "../components/Image";
 import Button from "../components/Button";
 export default function AddToCartPage() {
-  const { cart,setCart } = useContext(CartContext);
-const onInc=(id)=>{
-  setCart((previtem)=>{
-previtem.map((item)=>{
-  if(item.id===id){
-   return {...item,quantity:item.quantity+1}
+  const { cart,setCart,onIncrease,onDecrease } = useContext(CartContext);
+
+  const handleCancelProduct=(id)=>{
+    setCart((prevItem)=>prevItem.filter((item)=>item.id!=id))
   }
- return item
-})
-  })
-}
-const onDec=(id)=>{
-  setCart((prevItem)=>{
-    prevItem.map((item)=>
-      (item.id===id)?
-       {...item,quantity:item.quantity-1}:item
-    )
-  })
-}
 
   if (!cart) return <h1>No items in cart Please add</h1>
   return (
@@ -43,12 +29,12 @@ const onDec=(id)=>{
         <Text text={item.name} className="font-bold text-xl line-clamp-2 "/>
         <Text text={`₹ ${item.price*item.quantity}Rs`} className="text-red-400 text-xl font-bold my-2 "/>
       <div className="bg-green-400 w-22 rounded-xl py-1 px-2 ">
-        <Button label={"➖"} className="pr-2" onClick={()=>onDec(item.id)} />
+        <Button label={"➖"} className="pr-2" onClick={()=>onDecrease(item.id)} />
         <span className="text-white font-bold text-md">{item.quantity}</span>
-       <Button label={"➕"} className="pl-2" onClick={()=>onInc(item.id)}/>
+       <Button label={"➕"} className="pl-2" onClick={()=>onIncrease(item.id)}/>
        </div> 
         </div>
-        <Text text={"X"}/>
+        <Text text={"X"}  className="cursor-pointer text-red-400 font-semibold" onClick={()=>handleCancelProduct(item.id)}/>
         </div>
         ):""}
       </div>

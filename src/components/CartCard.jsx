@@ -12,17 +12,17 @@ function CartCard({cartValue}) {
        className="w-7 h-7 m-3"
        />
        <Text
-       text="Your Cart"
+       text="Your Cart"                                                        
        className='text-3xl  font-bold my-2'/>
        <span className="text-xl text-black font-bold">{cartValue}</span>
        
        <Image
        src={CrossIcon}
        alt="crossicon pic"
-       className="w-7 h-7 m-4"
+       className="w-7 h-7 m-4"                         
        />
     </div>
-  )
+  )                                                                                                                                                                                                   
 }
 
 export default CartCard

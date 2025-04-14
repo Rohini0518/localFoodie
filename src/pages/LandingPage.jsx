@@ -163,7 +163,6 @@ export default function LandingPage() {
         onDec={cartDecrement}
         productRef={productRef}
       />
-      <CartCard/>
-    </div>
+        </div>
   );
 }

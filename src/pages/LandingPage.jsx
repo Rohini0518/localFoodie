@@ -2,12 +2,14 @@ import juiceLogo from "../assets/sugarcanejuice-small.png";
 import Image from "../components/Image";
 import Text from "../components/Text";
 import ProductCard from "../components/ProductCard";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useRef } from "react";
 import { CartContext } from "../CartContext";
 
 export default function LandingPage() {
-  const { cart, setCart, handleAddToCart, onIncrease, onDecrease } =
+  const { handleAddToCart, onIncrease, onDecrease } =
     useContext(CartContext);
+    // const [isCartInitialized, setIsCartInitialized] = useState(false); // NEW
+
   const productRef = useRef({});
   const products = [
     {
@@ -51,28 +53,34 @@ export default function LandingPage() {
       label: "+ Kavali",
     },
   ];
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  
 
-  useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem("cart");
-      if (!savedCart || savedCart === "undefined") {
-        setCart([]);
-      } else {
-        const parsed = JSON.parse(savedCart);
-        if (Array.isArray(parsed)) {
-          setCart(parsed);
-        } else {
-          setCart([]);
-        }
-      }
-    } catch (error) {
-      console.error("Failed to parse cart from localStorage:", error);
-      // setCart([]);
-    }
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     const savedCart = localStorage.getItem("cart");
+  //     if (!savedCart || savedCart === "undefined") {
+  //       setCart([]);
+  //     } else {
+  //       const parsed = JSON.parse(savedCart);
+  //       if (Array.isArray(parsed)) {
+  //         setCart(parsed);
+  //       } else {
+  //         setCart([]);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to parse cart from localStorage:", error);
+  //     // setCart([]);
+  //   }
+  //   finally{
+  //     setIsCartInitialized(true)
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   if(isCartInitialized){
+  //   localStorage.setItem("cart", JSON.stringify(cart));
+  // }
+  // }, [cart,isCartInitialized]);
 
   const scrollToCard = (id) => {
     const targetProduct = productRef.current[id];

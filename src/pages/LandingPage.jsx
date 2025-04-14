@@ -117,10 +117,6 @@ export default function LandingPage() {
         onDec={onDecrease}
         productRef={productRef}
       />
-<<<<<<< HEAD
         </div>
-=======
-    </div>
->>>>>>> 8de7367cf2f73c60df91935d96579ad9407af3aa
   );
 }

@@ -4,7 +4,35 @@ import { CartContext } from "../CartContext";
 export default function CartLogic({ children }) {
   const [cart, setCart] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const [isCartInitialized, setIsCartInitialized] = useState(false);
 
+  useEffect(() => {
+    try {
+      const savedCart = localStorage.getItem("cart");
+      if (!savedCart || savedCart === "undefined") {
+        setCart([]);
+      } else {
+        const parsedCart = JSON.parse(savedCart);
+        if (Array.isArray(parsedCart)) {
+          setCart(parsedCart);
+        } else {
+          setCart([]);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to parse cart from localStorage:", error);
+      setCart([]);
+    }
+    finally{
+      setIsCartInitialized(true)
+    }
+  }, []);
+
+  useEffect(() => {
+    if(isCartInitialized){
+    localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart,isCartInitialized]);
   useEffect(() => {
     const total = cart.reduce((sum, item) => sum + item.quantity, 0);
     setTotalQuantity(total);

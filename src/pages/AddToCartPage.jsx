@@ -52,10 +52,10 @@ export default function AddToCartPage() {
       <div>
         {cart.length > 0
           ? cart.map((item) => (
-              <div key={item.id} className="flex justify-between mx-8 my-4">
+              <div key={item.id} className="flex justify-between items-start mx-8 my-4">
                 <Image src={item.image} className="w-40 h-40 rounded-xl" />
                 <div className="mx-4 flex flex-col items-start ">
-                  <div className="w-full">
+                  <div className="w-full flex flex-col items-start">
                     <Text
                       text={item.name}
                       className="font-bold text-xl break-words"
@@ -91,21 +91,21 @@ export default function AddToCartPage() {
           : ""}
       </div>
      {totalPrice != 0?
-      <div className="m-8">
+      <div className="m-8 flex justify-between mx-8 my-4">
         <Text
           text="Price Details"
-          className=" text-2xl fond-bold text-green-400 my-4 "
+          className=" text-2xl font-bold text-green-400 my-4 "
         />
         <div className="h-50">
-          <div className="flex justify-between mb-4   items-center">
+          <div className="flex justify-between mb-4  items-center">
             <Text text="Products Price" />
             <Text text={totalPrice} />
           </div>
-          <div className="flex justify-between mb-4   items-center">
+          <div className="flex justify-between mb-4 items-center">
             <Text text="Delivery" />{" "}
             <Text text={ delivery} />
           </div>
-          <div className="flex justify-between   items-center">
+          <div className="flex justify-between items-center">
             <Text text="Total Price" />{" "}
             <Text text={totalPrice + delivery} />
           </div>
@@ -113,7 +113,7 @@ export default function AddToCartPage() {
 
         <Button
           label={`pay ${totalPrice + delivery }`}
-          className=" w-full fixed bottom-2 bg-green-500 text-white px-3 py-3 rounded-xl text-lg font-bold shadow-lg hover:bg-green-600 cursor-pointer"
+          className=" w-full fixed bottom-2  bg-green-500 text-white px-3 py-3 rounded-xl text-lg font-bold shadow-lg hover:bg-green-600 cursor-pointer"
         />
       </div>:<h1 className="flex items-center justify-center text-3xl text-red-400 font-bold ">Please Add items into Cart</h1>}
     </div>

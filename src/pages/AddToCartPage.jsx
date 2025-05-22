@@ -4,23 +4,30 @@ import Text from "../components/Text";
 import Image from "../components/Image";
 import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function AddToCartPage() {
   const navigate = useNavigate();
   const { cart, setCart, onIncrease, onDecrease } = useContext(CartContext);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [delivery, setDelivery] = useState(20);
+  const [delivery] = useState(20);
 
   useEffect(() => {
     const productPrice = cart.reduce(
-      (sum, item) => sum + item.price * item.quantity,
+      (sum, item) => sum + item.productId.price * item.quantity,
       0
     );
     setTotalPrice(productPrice);
   }, [cart]);
 
-  const handleCancelProduct = (id) => {
-    setCart((prevItem) => prevItem.filter((item) => item.id != id));
+  const handleCancelProduct =async (id) => {
+    const deleteProduct=await axios.delete(`http://localhost:4000/cart/deleteItemById/${id}`)
+    console.log(deleteProduct);
+    
+    setCart((prevItem) => prevItem.filter((item) => item._id != id));
   };
+console.log(cart);
+console.log(cart.productId);
+
 
   if (!cart) return <h1>No items in cart Please add</h1>;
   return (
@@ -52,24 +59,24 @@ export default function AddToCartPage() {
       <div>
         {cart.length > 0
           ? cart.map((item) => (
-              <div key={item.id} className="flex justify-between items-start mx-8 my-4">
-                <Image src={item.image} className="w-40 h-40 rounded-xl" />
+              <div key={item._id} className="flex justify-between items-start mx-8 my-4">
+                <Image src={item.productId.image} className="w-40 h-40 rounded-xl" />
                 <div className="mx-4 flex flex-col items-start ">
                   <div className="w-full flex flex-col items-start">
                     <Text
-                      text={item.name}
+                      text={item.productId.name}
                       className="font-bold text-xl break-words"
                     />
                   </div>
                   <Text
-                    text={`₹ ${item.price * item.quantity}Rs`}
+                    text={`₹ ${item.productId.price * item.quantity}Rs`}
                     className="text-red-400 text-xl font-bold my-2 "
                   />
                   <div className="bg-green-400 w-22 rounded-xl py-1 px-2 ">
                     <Button
                       label={"➖"}
                       className="pr-2 cursor-pointer" 
-                      onClick={() => onDecrease(item.id)}
+                      onClick={() => onDecrease(item.productId._id)}
                     />
                     <span className="text-white font-bold text-md">
                       {item.quantity}
@@ -77,14 +84,14 @@ export default function AddToCartPage() {
                     <Button
                       label={"➕"}
                       className="pl-2 cursor-pointer"
-                      onClick={() => onIncrease(item.id)}
+                      onClick={() => onIncrease(item.productId._id)}
                     />
                   </div>
                 </div>
                 <Text
                   text={"X"}
                   className="cursor-pointer text-red-400 font-semibold"
-                  onClick={() => handleCancelProduct(item.id)}
+                  onClick={() => handleCancelProduct(item._id)}
                 />
               </div>
             ))
@@ -113,7 +120,7 @@ export default function AddToCartPage() {
 
         <Button
           label={`pay ${totalPrice + delivery }`}
-          className=" w-full fixed bottom-2  bg-green-500 text-white px-3 py-3 rounded-xl text-lg font-bold shadow-lg hover:bg-green-600 cursor-pointer"
+          className=" w-[30%] fixed bottom-2  bg-green-500 text-white px-3 py-3 rounded-xl text-lg font-bold shadow-lg hover:bg-green-600 cursor-pointer"
         />
       </div>:<h1 className="flex items-center justify-center text-3xl text-red-400 font-bold ">Please Add items into Cart</h1>}
     </div>

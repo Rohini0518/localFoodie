@@ -10,11 +10,11 @@ export default function ProductCard({ products,productRef, addToCart, onInc, onD
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-5">
       {products.map((product) => {
-        const existInCart = cart?.find((item) => item.id === product.id);
+        const existInCart = cart?.find((item) => item.productId._id === product._id);
         return (
           <div
-            key={product.id}
-            ref={(productElement)=>{productRef.current[product.id]=productElement}}
+            key={product._id}
+            ref={(productElement)=>{productRef.current[product._id]=productElement}}
             className="w-80 h-[320px] mx-auto rounded-xl shadow-2xl m-2 cursor-pointer object-cover transform transition-transform duration-500 active:scale-110 lg:hover:scale-110"
           >
             <Image src={product.image} className="w-full h-40 rounded-t-xl" />
@@ -27,7 +27,7 @@ export default function ProductCard({ products,productRef, addToCart, onInc, onD
                 text={`₹${product.price}Rs`}
                 className="text-3xl font-semibold text-green-500 "
               />
-              {!existInCart || existInCart.quantity === 0 ? (
+              {(!existInCart || existInCart.quantity === 0) ? (
                 <Button
                   label={product.label}
                   onClick={() => addToCart(product)}
@@ -38,15 +38,15 @@ export default function ProductCard({ products,productRef, addToCart, onInc, onD
                   <Button
                     className="text-green-500 text-md"
                     label={"➖"}
-                    onClick={() => onDec(product.id)}
+                    onClick={() => onDec(product._id)}
                   />
-                  <span className="mx-2 text-black font-xl">
+                  <span className="mx-2 text-white font-xl">
                     {existInCart.quantity}
                   </span>
                   <Button
                     className="text-green-500 text-md"
                     label={"➕"}
-                    onClick={() => onInc(product.id)}
+                    onClick={() => onInc(product._id)}
                   />
                 </div>
               )}

@@ -7,7 +7,7 @@ import axios from "axios";
 
 export default function LandingPage() {
   const { handleAddToCart, onIncrease, onDecrease } = useContext(CartContext);
-  // const [isCartInitialized, setIsCartInitialized] = useState(false); // NEW
+  // const [isCartInitialized, setIsCartInitialized] = useState(false); 
 
   const productRef = useRef({});
   const [products, setProducts] = useState([]);
@@ -19,7 +19,8 @@ export default function LandingPage() {
         "http://localhost:4000/products/getAllProducts"
       );
       setProducts(productsdata.data)
-      console.log(productsdata.data);}
+      // console.log(productsdata.data);
+    }
       catch(error){
         console.log("products data is not fetched",error)
       }
@@ -97,7 +98,9 @@ export default function LandingPage() {
   // }, [cart,isCartInitialized]);
 
   const scrollToCard = (id) => {
+    console.log(id)
     const targetProduct = productRef.current[id];
+    console.log(targetProduct)
     if (targetProduct) {
       targetProduct.scrollIntoView({ behaviour: "smooth", block: "center" });
       targetProduct.classList.add(
@@ -121,9 +124,9 @@ export default function LandingPage() {
       <div className="  flex flex-wrap justify-center gap-3 sm:gap-8 md:gap-8 lg:gap-15 m-4 ">
         {products.map((item) => (
           <Image
-            key={item.id}
+            key={item._id}
             src={item.image}
-            onClick={() => scrollToCard(item.id)}
+            onClick={() => scrollToCard(item._id)}
             className="w-14 h-14 sm:w-18 sm:h-18 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-xl cursor-pointer object-cover"
           />
         ))}

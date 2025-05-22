@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CartContext } from "../CartContext";
+import axios from "axios";
 
 export default function CartLogic({ children }) {
   const [cart, setCart] = useState([]);
@@ -8,7 +9,7 @@ export default function CartLogic({ children }) {
 
   useEffect(() => {
     try {
-      const savedCart = localStorage.getItem("cart");
+      const savedCart = axios.get("http://localhost:4000/cart/getAllItems");
       if (!savedCart || savedCart === "undefined") {
         setCart([]);
       } else {
@@ -22,62 +23,89 @@ export default function CartLogic({ children }) {
     } catch (error) {
       console.error("Failed to parse cart from localStorage:", error);
       setCart([]);
-    }
-    finally{
-      setIsCartInitialized(true)
+    } finally {
+      setIsCartInitialized(true);
     }
   }, []);
 
   useEffect(() => {
-    if(isCartInitialized){
-    localStorage.setItem("cart", JSON.stringify(cart));
+    if (isCartInitialized) {
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
-  }, [cart,isCartInitialized]);
+  }, [cart, isCartInitialized]);
+
   useEffect(() => {
     const total = cart.reduce((sum, item) => sum + item.quantity, 0);
     setTotalQuantity(total);
   }, [cart]);
 
-  const handleAddToCart = (product) => {
-    setCart((prevItem) => {
-      const existing = prevItem.find((item) => item.id === product.id);
-      if (existing) {
-        return prevItem.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prevItem, { ...product, quantity: 1 }];
-    });
+  const handleAddToCart = async (product) => {
+    try {
+       console.log(product._id);
+      const response = await axios.post(
+        `http://localhost:4000/cart/createCartItem`,
+        {
+          productId: product._id,
+          quantity: 1,
+        }
+      );
+      // console.log(response);
+    const createdItem=response.data.item
+      console.log(response.data.item);
+
+      setCart((prevCart)=>{
+      return [...prevCart,createdItem]
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
-  const onIncrease = (id) => {
-    setCart((prevItem) =>
-      prevItem.map((item) => {
-        if (item.id === id) {
-          if (item.quantity > 5) {
-            alert("maximum quantity is 5!");
-            return item;
-          }
-          return { ...item, quantity: item.quantity + 1 };
-        } else {
-          return item;
-        }
-      })
-    );
+  const onIncrease = async (id) => {
+    console.log("id for inc",typeof(id));
+    
+    try {
+      const response = await axios.put(`http://localhost:4000/cart/updateItemById/${id}`, {
+        action: "increase",
+      });
+      console.log(response);
+      
+      const updatedItem = response?.data?.item;
+      console.log(updatedItem);
+
+      setCart((prevItem) =>
+        prevItem.map((item) => item._id === id ? updatedItem : item)
+      );
+    } catch (error) {
+      console.error(
+        "Failed to increase quantity:",
+        error.response?.data || error.message
+      );
+    }
   };
-  const onDecrease = (id) => {
-    setCart((prevItem) =>
-      prevItem
-        .map((item) =>
-          item.id === id && item.quantity > 0
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
+
+  const onDecrease = async (id) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:4000/cart/updateItemById/" + id,
+        { action: "decrease" }
+      );
+      const updatedData = response.data.item;
+      setCart((prevItem) =>
+        prevItem
+          .map((item) =>
+            item._id === id && item.quantity > 0 ? updatedData : item
+          )
+          .filter((item) => item.quantity > 0)
+      );
+    } catch (error) {
+      console.log(
+        "cant decrease the item",
+        error.response?.data || error.message
+      );
+    }
   };
+
   return (
     <CartContext.Provider
       value={{

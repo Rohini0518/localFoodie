@@ -22,7 +22,6 @@ export default function AddToCartPage() {
   const handleCancelProduct =async (id) => {
     const deleteProduct=await axios.delete(`http://localhost:4000/cart/deleteItemById/${id}`)
     console.log(deleteProduct);
-    
     setCart((prevItem) => prevItem.filter((item) => item._id != id));
   };
 console.log(cart);
@@ -34,7 +33,6 @@ console.log(cart.productId);
     <div>
       <div className=" flex mx-2 my-4 items-center justify-between text-bold font-xl ">
         <div className="flex font-bold ">
-          {" "}
           <Text
             text={"<"}
             onClick={() => navigate(-1)}
@@ -76,7 +74,7 @@ console.log(cart.productId);
                     <Button
                       label={"➖"}
                       className="pr-2 cursor-pointer" 
-                      onClick={() => onDecrease(item.productId._id)}
+                      onClick={() => onDecrease(item._id)}
                     />
                     <span className="text-white font-bold text-md">
                       {item.quantity}
@@ -84,7 +82,7 @@ console.log(cart.productId);
                     <Button
                       label={"➕"}
                       className="pl-2 cursor-pointer"
-                      onClick={() => onIncrease(item.productId._id)}
+                      onClick={() => onIncrease(item._id)}
                     />
                   </div>
                 </div>

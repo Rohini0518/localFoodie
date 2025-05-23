@@ -11,6 +11,8 @@ export default function ProductCard({ products,productRef, addToCart, onInc, onD
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-5">
       {products.map((product) => {
         const existInCart = cart?.find((item) => item.productId._id === product._id);
+        console.log(existInCart,"existinacrt");
+        
         return (
           <div
             key={product._id}
@@ -38,15 +40,15 @@ export default function ProductCard({ products,productRef, addToCart, onInc, onD
                   <Button
                     className="text-green-500 text-md"
                     label={"➖"}
-                    onClick={() => onDec(product._id)}
+                    onClick={() => onDec(!existInCart?product._id:existInCart._id)}
                   />
-                  <span className="mx-2 text-white font-xl">
+                  <span className="mx-2 text-white font-sm">
                     {existInCart.quantity}
                   </span>
                   <Button
                     className="text-green-500 text-md"
                     label={"➕"}
-                    onClick={() => onInc(product._id)}
+                    onClick={() => onInc(!existInCart?product._id:existInCart._id)}
                   />
                 </div>
               )}

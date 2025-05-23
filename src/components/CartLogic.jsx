@@ -5,43 +5,32 @@ import axios from "axios";
 export default function CartLogic({ children }) {
   const [cart, setCart] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
-  const [isCartInitialized, setIsCartInitialized] = useState(false);
 
   useEffect(() => {
-    try {
-      const savedCart = axios.get("http://localhost:4000/cart/getAllItems");
-      if (!savedCart || savedCart === "undefined") {
+    async function loadCart() {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/cart/getAllItems"
+        );
+        const cartData = response.data.item;
+        console.log(cartData);
+        setCart(cartData);
+      } catch (error) {
+        console.log("failed to load cart from server", error);
         setCart([]);
-      } else {
-        const parsedCart = JSON.parse(savedCart);
-        if (Array.isArray(parsedCart)) {
-          setCart(parsedCart);
-        } else {
-          setCart([]);
-        }
       }
-    } catch (error) {
-      console.error("Failed to parse cart from localStorage:", error);
-      setCart([]);
-    } finally {
-      setIsCartInitialized(true);
     }
+    loadCart();
   }, []);
 
   useEffect(() => {
-    if (isCartInitialized) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
-  }, [cart, isCartInitialized]);
-
-  useEffect(() => {
-    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const total = cart.reduce((sum, item) => sum + item.quantity, 0) || 0;
     setTotalQuantity(total);
   }, [cart]);
 
   const handleAddToCart = async (product) => {
     try {
-       console.log(product._id);
+      console.log(product._id);
       const response = await axios.post(
         `http://localhost:4000/cart/createCartItem`,
         {
@@ -49,32 +38,29 @@ export default function CartLogic({ children }) {
           quantity: 1,
         }
       );
-      // console.log(response);
-    const createdItem=response.data.item
-      console.log(response.data.item);
-
-      setCart((prevCart)=>{
-      return [...prevCart,createdItem]
-      })
+      const createdItem = response.data.item;
+      setCart((prevCart) => {
+        return [...prevCart, createdItem];
+      });
     } catch (error) {
       console.log(error.message);
     }
   };
 
   const onIncrease = async (id) => {
-    console.log("id for inc",typeof(id));
-    
     try {
-      const response = await axios.put(`http://localhost:4000/cart/updateItemById/${id}`, {
-        action: "increase",
-      });
-      console.log(response);
-      
+      const response = await axios.put(
+        `http://localhost:4000/cart/updateItemById/${id}`,
+        {
+          action: "increase",
+        }
+      );
+
       const updatedItem = response?.data?.item;
       console.log(updatedItem);
 
       setCart((prevItem) =>
-        prevItem.map((item) => item._id === id ? updatedItem : item)
+        prevItem.map((item) => (item._id === id ? updatedItem : item))
       );
     } catch (error) {
       console.error(
@@ -91,12 +77,11 @@ export default function CartLogic({ children }) {
         { action: "decrease" }
       );
       const updatedData = response.data.item;
+      console.log(updatedData);
       setCart((prevItem) =>
-        prevItem
-          .map((item) =>
-            item._id === id && item.quantity > 0 ? updatedData : item
-          )
-          .filter((item) => item.quantity > 0)
+        updatedData
+          ? prevItem.map((item) => (item._id === id ? updatedData : item))
+          : prevItem.filter((item) => item._id !== id)
       );
     } catch (error) {
       console.log(

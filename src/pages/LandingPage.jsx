@@ -16,7 +16,9 @@ export default function LandingPage() {
     async function fetchProducts() {
       try{
       let productsdata = await axios.get(
-        "http://localhost:4000/products/getAllProducts"
+        "https://local-foodie-backend.vercel.app/products/getAllProducts",{
+  withCredentials: true,
+}
       );
       setProducts(productsdata.data)
     }

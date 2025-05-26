@@ -10,7 +10,7 @@ export default function CartLogic({ children }) {
     async function loadCart() {
       try {
         const response = await axios.get(
-          "http://localhost:4000/cart/getAllItems"
+          "https://local-foodie-backend.vercel.app/cart/getAllItems"
         );
         const cartData = response.data.item;
         console.log(cartData);
@@ -32,7 +32,7 @@ export default function CartLogic({ children }) {
     try {
       console.log(product._id);
       const response = await axios.post(
-        `http://localhost:4000/cart/createCartItem`,
+        `https://local-foodie-backend.vercel.app/cart/createCartItem`,
         {
           productId: product._id,
           quantity: 1,
@@ -50,7 +50,7 @@ export default function CartLogic({ children }) {
   const onIncrease = async (id) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/cart/updateItemById/${id}`,
+        `https://local-foodie-backend.vercel.app/cart/updateItemById/${id}`,
         {
           action: "increase",
         }
@@ -73,7 +73,7 @@ export default function CartLogic({ children }) {
   const onDecrease = async (id) => {
     try {
       const response = await axios.put(
-        "http://localhost:4000/cart/updateItemById/" + id,
+        "https://local-foodie-backend.vercel.app/cart/updateItemById/" + id,
         { action: "decrease" }
       );
       const updatedData = response.data.item;

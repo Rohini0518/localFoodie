@@ -20,7 +20,7 @@ export default function AddToCartPage() {
   }, [cart]);
 
   const handleCancelProduct =async (id) => {
-    const deleteProduct=await axios.delete(`http://localhost:4000/cart/deleteItemById/${id}`)
+    const deleteProduct=await axios.delete(`https://local-foodie-backend.vercel.app/cart/deleteItemById/${id}`)
     console.log(deleteProduct);
     setCart((prevItem) => prevItem.filter((item) => item._id != id));
   };

@@ -4,10 +4,9 @@ import Text from "../components/Text";
 import Image from "../components/Image";
 import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 export default function AddToCartPage() {
   const navigate = useNavigate();
-  const { cart, setCart, onIncrease, onDecrease } = useContext(CartContext);
+  const { cart, onIncrease, onDecrease,handleCancelProduct } = useContext(CartContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const [delivery] = useState(20);
 
@@ -18,14 +17,6 @@ export default function AddToCartPage() {
     );
     setTotalPrice(productPrice);
   }, [cart]);
-
-  const handleCancelProduct =async (id) => {
-    const deleteProduct=await axios.delete(`https://local-foodie-backend.vercel.app/cart/deleteItemById/${id}`)
-    console.log(deleteProduct);
-    setCart((prevItem) => prevItem.filter((item) => item._id != id));
-  };
-console.log(cart);
-console.log(cart.productId);
 
 
   if (!cart) return <h1>No items in cart Please add</h1>;
@@ -56,18 +47,33 @@ console.log(cart.productId);
 
       <div>
         {cart.length > 0
-          ? cart.map((item) => (
+          ? cart.map((item) => {
+              const product = item.productId || {};
+      const imgSrc  = product.image || null;
+      const name    = product.name  || "Unknown Product";
+      const price   = typeof product.price === "number" 
+                        ? product.price 
+                        : 0;
+      const qty     = typeof item.quantity === "number" 
+                        ? item.quantity 
+                        : 0;
+      const total   = price * qty;
+          return  (
               <div key={item._id} className="flex justify-between items-start mx-8 my-4">
-                <Image src={item.productId.image} className="w-40 h-40 rounded-xl" />
+                {imgSrc
+      ?<Image src={imgSrc} className="w-40 h-40 rounded-xl" />
+      : <div>No Image</div>
+    }
+                
                 <div className="mx-4 flex flex-col items-start ">
                   <div className="w-full flex flex-col items-start">
                     <Text
-                      text={item.productId.name}
+                      text={name}
                       className="font-bold text-xl break-words"
                     />
                   </div>
                   <Text
-                    text={`₹ ${item.productId.price * item.quantity}Rs`}
+                    text={`₹ ${total}Rs`}
                     className="text-red-400 text-xl font-bold my-2 "
                   />
                   <div className="bg-green-400 w-22 rounded-xl py-1 px-2 ">
@@ -92,7 +98,7 @@ console.log(cart.productId);
                   onClick={() => handleCancelProduct(item._id)}
                 />
               </div>
-            ))
+            )})
           : ""}
       </div>
      {totalPrice != 0?

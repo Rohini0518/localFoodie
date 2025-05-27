@@ -76,13 +76,18 @@ export default function CartLogic({ children }) {
         "https://local-foodie-backend.vercel.app/cart/updateItemById/" + id,
         { action: "decrease" }
       );
+      console.log("Full response from backend:", response.data);
       const updatedData = response.data.item;
-      console.log(updatedData);
-      setCart((prevItem) =>
-        updatedData
-          ? prevItem.map((item) => (item._id === id ? updatedData : item))
-          : prevItem.filter((item) => item._id !== id)
-      );
+      console.log("deleted item", updatedData);
+      
+      setCart((prevItem) => {
+        if (updatedData) {
+          return prevItem.map((item) => (item._id === id ? updatedData : item));
+        }
+        else {
+          return prevItem.filter((item) => item.quantity>0);
+        }
+      });
     } catch (error) {
       console.log(
         "cant decrease the item",
@@ -91,6 +96,12 @@ export default function CartLogic({ children }) {
     }
   };
 
+  
+  const handleCancelProduct =async (id) => {
+    const deleteProduct=await axios.delete(`https://local-foodie-backend.vercel.app/cart/deleteItemById/${id}`)
+    console.log(deleteProduct);
+    setCart((prevItem) => prevItem.filter((item) => item._id != id));
+  };
   return (
     <CartContext.Provider
       value={{
@@ -101,6 +112,7 @@ export default function CartLogic({ children }) {
         onIncrease,
         totalQuantity,
         setTotalQuantity,
+        handleCancelProduct
       }}
     >
       {children}

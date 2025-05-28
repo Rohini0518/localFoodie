@@ -30,7 +30,6 @@ export default function LandingPage() {
   const scrollToCard = (id) => {
     console.log(id)
     const targetProduct = productRef.current[id];
-    console.log(targetProduct)
     if (targetProduct) {
       targetProduct.scrollIntoView({ behaviour: "smooth", block: "center" });
       targetProduct.classList.add(

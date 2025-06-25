@@ -4,6 +4,7 @@ import { EyeIcon, EyeSlashIcon, UserIcon, EnvelopeIcon, LockClosedIcon } from '@
 
 export default function RegistrationForm(){
     const[showPassword,setShowPassword]=useState(false)
+    
     return(
        <div className="min-h-screen flex  items-center justify-center bg-green-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-gray-100 shadow-md py-4 px-8">
@@ -12,7 +13,7 @@ export default function RegistrationForm(){
             Create your account
           </h2>
           <p className="mt-2  text-sm text-gray-600">
-            Or{' '}
+            Or
             <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
               sign in to your existing account
             </a>
@@ -33,7 +34,6 @@ export default function RegistrationForm(){
                   id="name"
                   name="name"
                   type="text"
-                  
                   className={`block w-full pl-10 pr-3 py-2 border
                    rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   placeholder="Enter your full name"
@@ -41,7 +41,6 @@ export default function RegistrationForm(){
               </div>
             </div>
 
-            {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-left text-sm font-medium text-gray-700">
                 Email <span className="text-red-500">*</span>
@@ -63,7 +62,6 @@ export default function RegistrationForm(){
               
             </div>
 
-            {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm text-left font-medium text-gray-700">
                 Password <span className="text-red-500">*</span>
@@ -96,7 +94,6 @@ export default function RegistrationForm(){
               
             </div>
 
-            {/* Confirm Password Field */}
             <div>
               <label htmlFor="confirmPassword" className="block text-left text-sm font-medium text-gray-700">
                 Confirm Password <span className="text-red-500">*</span>
@@ -117,13 +114,13 @@ export default function RegistrationForm(){
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                //   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  onClick={() => setShowPassword(!showPassword)}
                 >
-                  {/* {showConfirmPassword ? (
+                  {showPassword ? (
                     <EyeSlashIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
                   ) : (
                     <EyeIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                  )} */}
+                  )}
                 </button>
               </div>
             
@@ -148,8 +145,8 @@ export default function RegistrationForm(){
               By creating an account, you agree to our{' '}
               <a href="/terms" className="text-indigo-600 hover:text-indigo-500">
                 Terms of Service
-              </a>{' '}
-              and{' '}
+              </a>
+              and
               <a href="/privacy" className="text-indigo-600 hover:text-indigo-500">
                 Privacy Policy
               </a>

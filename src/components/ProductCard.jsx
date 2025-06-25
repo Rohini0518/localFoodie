@@ -11,7 +11,7 @@ export default function ProductCard({ products,productRef, addToCart, onInc, onD
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-5">
       {products.map((product) => {
         const existInCart = cart?.find((item) => item.productId._id === product._id);
-        console.log(existInCart,"existinacrt");
+        console.log(existInCart,"existinCart");
         
         return (
           <div
@@ -19,6 +19,7 @@ export default function ProductCard({ products,productRef, addToCart, onInc, onD
             ref={(productElement)=>{productRef.current[product._id]=productElement}}
             className="w-80 h-[320px] mx-auto rounded-xl shadow-2xl m-2 cursor-pointer object-cover transform transition-transform duration-500 active:scale-110 lg:hover:scale-110"
           >
+            {/* product.promted &&(<div className="absolute bg-amber-600 font-semibold text-white rounded-2xl"></div>) */}
             <Image src={product.image} className="w-full h-40 rounded-t-xl" />
             <Text
               text={product.name}

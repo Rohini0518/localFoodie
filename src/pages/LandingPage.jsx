@@ -4,6 +4,7 @@ import ProductCard from "../components/ProductCard";
 import { useContext, useRef, useState, useEffect } from "react";
 import { CartContext } from "../CartContext";
 import axios from "axios";
+import ShimmerUi from "../components/ShimmerUi";
 
 export default function LandingPage() {
   const { handleAddToCart, onIncrease, onDecrease } = useContext(CartContext);
@@ -47,7 +48,10 @@ export default function LandingPage() {
         );
       }, 1000);
     }
-  };
+  };  
+
+  if(products.length==0) return (<div className="flex flex-wrap">{Array.from({length:3},(_,i)=>(<div key={i}><ShimmerUi/></div>))}</div> 
+)
   return (
     <div className="scroll-smooth">
       <div className="  flex flex-wrap justify-center gap-3 sm:gap-8 md:gap-8 lg:gap-15 m-4 ">
